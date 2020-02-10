@@ -41,6 +41,34 @@ print_words() and print_top().
 
 import sys
 
+dicto = {}
+
+def wordCount(filename):
+    with open(filename, "r") as rf:
+        for line in rf:
+            SplitLine = line.split()
+            for word in SplitLine:
+                if word.lower() not in dicto:
+                    dicto[word.lower()] = 1
+                else:
+                    dicto[word.lower()] += 1
+
+def print_words(filename):
+    wordCount(filename)
+    SortedKeys = sorted(dicto.keys())
+    for i in SortedKeys:
+        print("{}: {}".format(i,dicto[i]))
+
+
+
+def print_top(filename):
+    wordCount(filename)
+    SortedValues = sorted(dicto,key=dicto.get, reverse=True)[:20]
+    for i in SortedValues:
+        print("{}: {}".format(i,dicto[i]))
+
+
+
 # +++your code here+++
 # Define print_words(filename) and print_top(filename) functions.
 # You could write a helper utility function that reads a file
@@ -55,7 +83,7 @@ import sys
 
 def main():
     if len(sys.argv) != 3:
-        print 'usage: python wordcount.py {--count | --topcount} file'
+        print ('usage: python wordcount.py {--count | --topcount} file')
         sys.exit(1)
 
     option = sys.argv[1]
@@ -65,7 +93,7 @@ def main():
     elif option == '--topcount':
         print_top(filename)
     else:
-        print 'unknown option: ' + option
+        print ('unknown option: ' + option)
         sys.exit(1)
 
 
